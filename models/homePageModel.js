@@ -37,11 +37,42 @@ const codeIntegrationStepSchema = new mongoose.Schema({
 const statsSchema = new mongoose.Schema({
     value: {
         type: Number,
-        required: [false, "A stats section must have a value"]
+        required: [false, "A stat section must have a value"]
+    },
+    unit: {
+        type: String,
+        required: [false, "A stat must have a unit"]
     },
     label: {
         type: String,
-        required: [false, "A stats section must have a label"]
+        required: [false, "A stat section must have a label"]
+    }
+});
+
+const plansSchema = new mongoose.Schema({
+    planName: {
+        type: String,
+        required: [false, "A plan must have a plan name"]
+    },
+    planPurpose: {
+        type: String,
+        required: [false, "A plan must have a plan name"]
+    },
+    price: {
+        type: String,
+        required: [false, "A plan must have a plan name"]
+    },
+    duration: {
+        type: String,
+        required: [false, "A plan must have a plan name"]
+    },
+    planDetails: {
+        type: [String],
+        required: [false, "A plan must have a plan name"]
+    },
+    ctaButton: {
+        type: String,
+        required: [false, "A plan must have a plan name"]
     }
 });
 
@@ -110,10 +141,10 @@ const homePageSchema = new mongoose.Schema({
         type: String,
         required: [false, "A pricing section must have a heading"]
     },
-    // pricingPlans: {
-    //     type: [String],
-    //     required: [false, "A pricing section must have a plan"]
-    // }
+    pricingPlans: {
+        type: [plansSchema],
+        required: [false, "A pricing section must have a plan"]
+    }
 });
 
 
