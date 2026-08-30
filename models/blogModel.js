@@ -24,10 +24,10 @@ const blogSchema = new mongoose.Schema({
         type: String,
         required: [false, "A blog must have a description"]
     },
-    // blogKeyTakeways: {
-    //     type: [String],
-    //     required: [false, " A blog must have a category"]
-    // }
+    blogKeyTakeways: {
+        type: [String],
+        required: [false, " A blog must have a category"]
+    }
 });
 
 
