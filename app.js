@@ -4,6 +4,7 @@ const cors = require("cors");
 const homePageRouter = require(`${__dirname}/routes/homePageRoutes.js`);
 const blogRouter = require(`${__dirname}/routes/blogRoutes.js`);
 const aboutRouter = require(`${__dirname}/routes/aboutRoutes.js`);
+const blogCategoryRouter = require(`${__dirname}/routes/blogCategoryRoutes.js`);
 
 const app = express();
 
@@ -20,6 +21,7 @@ app.use(express.json());
 
 app.use("/api/v1/homepage", homePageRouter);
 app.use("/api/v1/blogs", blogRouter);
+app.use("/api/v1/blog_category", blogCategoryRouter);
 app.use("/api/v1/aboutPage", aboutRouter);
 
 
