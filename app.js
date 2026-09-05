@@ -12,8 +12,8 @@ app.use(cors({
     origin: [
         "http://localhost:5173",
         "http://localhost:5174",
-        // "https://ai-vite-project.netlify.app",
-        // "https://ai-vite-admin.netlify.app"
+        "https://ai-vite-project.netlify.app",
+        "https://ai-vite-admin.netlify.app"
     ]
 }))
 
