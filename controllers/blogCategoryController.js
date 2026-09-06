@@ -79,7 +79,7 @@ exports.updateBlogCategory = async (req, res) => {
 
 exports.deleteBlogCategory = async (req, res) => {
     try {
-        await BlogCategory.fildByIdAndDelete(req.params.id);
+        await BlogCategory.findByIdAndDelete(req.params.id);
 
         res.status(204).json({
             status: "success",
