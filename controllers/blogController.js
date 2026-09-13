@@ -80,7 +80,7 @@ exports.updateBlog = async (req, res) => {
 
 exports.deleteBlog = async (req, res) => {
     try {
-        Blog.findByIdAndDelete(req.params.id);
+        await Blog.findByIdAndDelete(req.params.id);
 
         res.status(204).json({
             status: "success",
