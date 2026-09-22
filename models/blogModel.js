@@ -15,6 +15,10 @@ const blogSchema = new mongoose.Schema({
         type: String,
         required: [false, "A blog must have a title"]
     },
+    blogSlug: {
+        type: String,
+        required: [false, "A blog must have a slug"]
+    },
     blogPostDate: {
         type: Date,
         default: new Date,

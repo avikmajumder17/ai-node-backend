@@ -9,6 +9,7 @@ exports.getAllBlogs = async (req, res) => {
         res.status(200).json({
             status: "success",
             result: blogs.length,
+            imageBaseUrl: process.env.BASE_URL,
             data: {
                 blogs
             }
@@ -27,6 +28,7 @@ exports.getBlog = async (req, res) => {
 
         res.status(200).json({
             status: "success",
+            imageBaseUrl: process.env.BASE_URL,
             data: {
                 blog
             }
@@ -40,8 +42,12 @@ exports.getBlog = async (req, res) => {
 };
 
 exports.createBlog = async (req, res) => {
-    try {
-        const newBlog = await Blog.create(req.body);
+    try {        
+        const newBlog = await Blog.create({
+            ...req.body,
+            blogKeyTakeways: JSON.parse(req.body.blogKeyTakeways),
+            image: req.file.filename
+        });
 
         res.status(201).json({
             status: "success",
@@ -59,10 +65,18 @@ exports.createBlog = async (req, res) => {
 
 exports.updateBlog = async (req, res) => {
     try {
-        const newBlog = await Blog.findByIdAndUpdate(req.params.id, req.body, {
-            new: true,
-            runValidators: true
-        });
+        const newBlog = await Blog.findByIdAndUpdate(
+            req.params.id,
+            {
+                ...req.body,
+                blogKeyTakeways: JSON.parse(req.body.blogKeyTakeways),
+                image: req.file.filename
+            },
+            {
+                new: true,
+                runValidators: true
+            }
+        );
 
         res.status(200).json({
             status: "success",
