@@ -11,7 +11,6 @@ exports.getAllBlogs = async (req, res) => {
         res.status(200).json({
             status: "success",
             result: blogs.length,
-            imageBaseUrl: process.env.BASE_URL,
             data: {
                 blogs
             }
@@ -19,7 +18,7 @@ exports.getAllBlogs = async (req, res) => {
     } catch (err) {
         res.status(404).json({
             status: "fail",
-            message: err
+            message: err.message
         });
     }
 };
@@ -30,7 +29,6 @@ exports.getBlog = async (req, res) => {
 
         res.status(200).json({
             status: "success",
-            imageBaseUrl: process.env.BASE_URL,
             data: {
                 blog
             }
@@ -38,7 +36,7 @@ exports.getBlog = async (req, res) => {
     } catch (err) {
         res.status(404).json({
             status: "fail",
-            message: err
+            message: err.message
         });
     }
 };
@@ -70,7 +68,7 @@ exports.createBlog = async (req, res) => {
     } catch (err) {
         res.status(404).json({
             status: "fail",
-            message: err
+            message: err.message
         });
     }
 };
@@ -108,7 +106,7 @@ exports.updateBlog = async (req, res) => {
     } catch (err) {
         res.status(404).json({
             status: "fail",
-            message: err
+            message: err.message
         });
     }
 };
@@ -130,7 +128,7 @@ exports.deleteBlog = async (req, res) => {
     } catch (err) {
         res.status(404).json({
             status: "fail",
-            message: err
+            message: err.message
         });
     }
 };
