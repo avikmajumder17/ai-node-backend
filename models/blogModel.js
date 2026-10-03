@@ -7,6 +7,10 @@ const blogSchema = new mongoose.Schema({
         type: String,
         required: [false, "A blog must have an image"]
     },
+    imagePublicId: {
+        type: String,
+        required: [false, "A blog must have an image public id"]
+    },
     blogCategory: {
         type: String,
         required: [false, "A blog must have a category"]

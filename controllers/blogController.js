@@ -1,4 +1,6 @@
 const Blog = require("../models/blogModel");
+const cloudinary = require("../cloudinary");
+const uploadToCloudinary = require("../utils/uploadToCloudinary");
 
 
 
@@ -43,10 +45,20 @@ exports.getBlog = async (req, res) => {
 
 exports.createBlog = async (req, res) => {
     try {        
+        if (!req.file) {
+            return res.status(400).json({
+                status: "fail",
+                message: "Image is required"
+            });
+        }
+
+        const result = await uploadToCloudinary(req.file.buffer, "blogs");
+
         const newBlog = await Blog.create({
             ...req.body,
             blogKeyTakeways: JSON.parse(req.body.blogKeyTakeways),
-            image: req.file.filename
+            image: result.secure_url,
+            imagePublicId: result.public_id
         });
 
         res.status(201).json({
@@ -65,18 +77,27 @@ exports.createBlog = async (req, res) => {
 
 exports.updateBlog = async (req, res) => {
     try {
+        const oldBlog = await Blog.findById(req.params.id);
+
+        const result = await uploadToCloudinary(req.file.buffer, "blogs");
+
         const newBlog = await Blog.findByIdAndUpdate(
             req.params.id,
             {
                 ...req.body,
                 blogKeyTakeways: JSON.parse(req.body.blogKeyTakeways),
-                image: req.file.filename
+                image: result.secure_url,
+                imagePublicId: result.public_id
             },
             {
                 new: true,
                 runValidators: true
             }
         );
+
+        if (oldBlog && oldBlog.imagePublicId) {
+            await cloudinary.uploader.destroy(oldBlog.imagePublicId);
+        }
 
         res.status(200).json({
             status: "success",
@@ -94,6 +115,12 @@ exports.updateBlog = async (req, res) => {
 
 exports.deleteBlog = async (req, res) => {
     try {
+        const blog = await Blog.findById(req.params.id);
+
+        if (blog && blog.imagePublicId) {
+            await cloudinary.uploader.destroy(blog.imagePublicId);
+        }
+
         await Blog.findByIdAndDelete(req.params.id);
 
         res.status(204).json({
